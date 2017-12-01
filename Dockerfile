@@ -22,7 +22,8 @@ RUN composer global require hirak/prestissimo
 # install xhprof
 RUN pecl install -f xhprof && docker-php-ext-enable xhprof;
 RUN mkdir /var/xhprof \
-    && tar -xf /tmp/pear/download/xhprof-0.9.4.tgz -C /var/xhprof
+    && tar -xf /tmp/pear/download/xhprof-0.9.4.tgz -C /tmp \
+    && cp -R /tmp/xhprof-0.9.4/. /var/xhprof
 COPY ./xhprof/*.php /var/xhprof/
 VOLUME /var/xhprof
 
