@@ -19,8 +19,16 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # parallel install plugin
 RUN composer global require hirak/prestissimo
 
+# install xhprof
+RUN pecl install -f xhprof && docker-php-ext-enable xhprof;
+RUN mkdir /var/xhprof \
+    && tar -xf /tmp/pear/download/xhprof-0.9.4.tgz -C /var/xhprof
+COPY ./xhprof/*.php /var/xhprof/
+VOLUME /var/xhprof
+
 RUN apt-get clean && apt-get autoclean && apt-get autoremove -y
 RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+RUN mkdir /var/tmp/xhprof && chmod 777 /var/tmp/xhprof
 
 ADD ./conf.d/ /usr/local/etc/php/conf.d/
 
