@@ -14,6 +14,11 @@ RUN apt-get install -y libmemcached-dev zlib1g-dev graphviz \
 # Install bcmath
 RUN docker-php-ext-install bcmath
 
+# install php-cs-fixer
+RUN curl -L https://cs.symfony.com/download/php-cs-fixer-v2.phar -o php-cs-fixer && \
+    chmod a+x php-cs-fixer && \
+    mv php-cs-fixer /usr/local/bin/php-cs-fixer
+
 RUN apt-get install -y zlib1g-dev && docker-php-ext-install zip
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 # parallel install plugin
